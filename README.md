@@ -1,4 +1,4 @@
-# GROUP-NO DAY OFF –Lab 3–Variant“Math Expression by String”
+# GROUP-NO DAY OFF –Lab3–Variant“Math Expression by String Substitution”
 
 This project implements a simple interpreter for mathematical expressions
 using iterative string substitution. It supports variables,
