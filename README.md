@@ -1,4 +1,5 @@
 # GROUP-NO DAY OFF – Lab 3 – Variant
+
 # “Mathematical Expression by String Substitution”
 
 This project implements a simple interpreter for mathematical expressions
