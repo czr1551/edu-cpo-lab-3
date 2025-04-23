@@ -15,7 +15,8 @@ class ExpressionError(Exception):
 
 def arg_type(pos, expected_type):
     """
-    Decorator: ensure argument at position `pos` is instance of `expected_type`.
+    Decorator: ensure argument at position `
+    pos` is instance of `expected_type`.
     """
     def decorator(func):
         @wraps(func)
