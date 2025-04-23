@@ -1,75 +1,84 @@
-# GROUP-NO DAY OFF - lab 1 - variant "Set based on hash map, open addressing"
+# GROUP-NO DAY OFF - lab 3 - variant 
+"Mathematical Expression by String Substitution"
 
-This project implements a Set based on Hash Map (Open Addressing) and  
-demonstrates mutable data structure implementation. It follows proper  
-project structure and CI checks.
+This project implements a simple interpreter for mathematical expressions
+using iterative string substitution. It supports variables, 
+built-in and user-defined functions, correct operator precedence,
+and detailed error reporting with logging.
 
 ## Project structure
 
-- `open_addressing_set.py` — Implementation of `OpenAddressingSet` class  
-  with `add`, `remove`, `member`, `filter`, `map`, `reduce`, and other features.
+- `math_expression_by_string.py`
+- Contains the evaluate() function and ExpressionError exception.
+- Validates inputs (expression, variables, functions)
+- Strips and tokenizes the expression
+- Recursively handles function calls and grouping parentheses
+- Performs flat numeric evaluation with correct operator precedence
+- Uses Python’s math module and user-supplied callables
+- Logs each substitution and computation step with logging
 
-- `test_open_addressing_set.py` — Unit tests and Property-Based Tests (PBT)  
-  for `OpenAddressingSet`.
+- `test_math_expression_by_string.py`
+- Simple examples: basic arithmetic, unary minus
+- Complex precedence: nested parentheses, exponent chains
+- Decimal & whitespace: handling floats and arbitrary spaces
+- Built-in & multi-arg functions: sin, cos, max, min, pow
+- User-defined functions
+- Variable substitution
+- Error & boundary conditions: type checks,
+  unknown identifiers, division by zero, empty expressions
+  
 
 ## Features
 
 - **Core functionality:**
 
-- `add(key)`: Add an element.
-- `remove(key)`: Remove an element.
-- `member(key)`: Check if an element exists.
-- `size()`: Get the number of elements.
-- `from_list(lst)`: Create a set from a Python list.
-- `to_list()`: Convert the set to a Python list.
-- `concat(set)`: Merge two sets.
+- Basic arithmetic: +, -, *, /, //, %, **
+- Correct precedence & associativity
+- Parentheses: arbitrary nesting
+- Built-in functions: all from Python’s math plus max, min, pow
+- User functions: pass a functions dict of name→callable
+- Variables: pass a variables dict of name→number
+- Detailed errors: clear messages for missing args, type mismatches,
+  unknown identifiers, runtime errors
 
-- **Functional operations:**
 
-- `filter(predicate)`: Return a new set with elements that satisfy  
-    the predicate.
-- `map(func)`: Apply a function to all elements and return a new set.
-- `reduce(func, initial_state)`: Aggregate values using a given function.
-
-- **PBT:**
-- `test_from_list_to_list_equality`
-- `test_python_len_and_set_size_equality`
-- `test_add_commutative`
-
-- **Monoid properties:**
-
-- `empty()`: Create an empty set.
-- `concat(set)`: Combine two sets.
 
 ## Contribution
 
-- `<czr61551@gmail.com>` -- Implementation of `OpenAddressingSet`,  
+- `<czr61551@gmail.com>` -- Implementation of `math_expression_by_string`,  
   documentation.
 
 - `<quinn_wang0416@163.com>` -- Implementation of test cases.
 
 ## Changelog
 
-- **26.02.2025 - 3**
-- Modify the format to make Actions run.
-- Reconfirm the integrity of the project content.
-- Change comment language.
+- **2025-04-23 – 1.2**
+- Fixed right-associative exponentiation edge cases
+- Improved flat evaluator regex for mixed operators
+- Enhanced error messages for empty expressions
 
 - **12.02.2025 - 2**
 - Refactored `_probe()` to correctly handle empty slots.
 
-- **11.02.2025 - 1**
-- Improved test coverage.
+- **2025-04-21 – 1.1**
+- Added support for // and % operators
+- Integrated user-defined multi-argument functions
 
-- **10.02.2025 - 0**
-- Initial implementation of `OpenAddressingSet`.
-- Basic tests for `add()`, `remove()`, and `member()`.
+- **2025-04-19 – 1.0**
+- Initial implementation of string-substitution evaluator
+- Basic support: +, -, *, /, **, variables, built-in functions, logging
 
 ## Design notes
 
-- Used open addressing with linear probing for collision resolution.
-- Used a special marker `EMPTY` to distinguish deleted elements from `None`.
-- Ensured logarithmic growth factor to maintain efficient resizing.
-- Designed unit tests and PBT to validate properties of `OpenAddressingSet`.
-- Followed PEP8 and CI best practices with `pytest`, `ruff`, `mypy`,  
-  and `coverage`.
+- Parsing approach: no AST or Python eval()—uses regex to locate
+  innermost constructs and replace them with numeric results
+- Function & grouping recursion:
+  First handle function calls (to correctly parse f(1+2))
+  Then strip a single layer of parentheses ((…​))
+  Finally perform flat numeric reductions
+- Logging: uses Python’s logging.DEBUG to trace each match, replacement
+  and computed value
+- Error safety:Decorated to enforce string-type expressions
+  Checks for empty inputs, invalid variable/function mappings
+  Catches runtime errors (like division by zero) and rethrows as
+  ExpressionError with context
