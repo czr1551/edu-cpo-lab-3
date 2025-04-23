@@ -1,8 +1,8 @@
-# GROUP-NO DAY OFF - lab 3 - variant 
-"Mathematical Expression by String Substitution"
+# GROUP-NO DAY OFF - lab 3 - variant
+"Mathematical Expression by String Substitution" 
 
 This project implements a simple interpreter for mathematical expressions
-using iterative string substitution. It supports variables, 
+using iterative string substitution. It supports variables,
 built-in and user-defined functions, correct operator precedence,
 and detailed error reporting with logging.
 
@@ -26,7 +26,6 @@ and detailed error reporting with logging.
 - Variable substitution
 - Error & boundary conditions: type checks,
   unknown identifiers, division by zero, empty expressions
-  
 
 ## Features
 
@@ -40,8 +39,6 @@ and detailed error reporting with logging.
 - Variables: pass a variables dict of name→number
 - Detailed errors: clear messages for missing args, type mismatches,
   unknown identifiers, runtime errors
-
-
 
 ## Contribution
 
