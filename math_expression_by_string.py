@@ -7,6 +7,7 @@ from functools import wraps
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+
 class ExpressionError(Exception):
     """Custom exception for expression evaluation errors."""
     pass
@@ -30,6 +31,7 @@ def arg_type(pos, expected_type):
             return func(*args, **kwargs)
         return wrapper
     return decorator
+
 
 @arg_type(0, str)
 def evaluate(expression, variables=None, functions=None):
@@ -57,7 +59,8 @@ def evaluate(expression, variables=None, functions=None):
         if not isinstance(n, str):
             raise ExpressionError(f"Variable name {n!r} is not a string")
         if not isinstance(v, (int, float)):
-            raise ExpressionError(f"Variable {n!r} has non-numeric value {v!r}")
+            raise ExpressionError(
+                f"Variable {n!r} has non-numeric value {v!r}")
     for n, f in functions.items():
         if not isinstance(n, str):
             raise ExpressionError(f"Function name {n!r} is not a string")
@@ -108,31 +111,43 @@ def evaluate(expression, variables=None, functions=None):
             logger.debug(f"**: {a}**{b} -> {r}, now {s}")
 
         # 2) *, /, //, % left-assoc
-        pat_mul = re.compile(r'(-?\d+(?:\.\d+)?)(?P<op>//|%|\*|/)(-?\d+(?:\.\d+)?)')
+        pat_mul = re.compile(
+            r'(-?\d+(?:\.\d+)?)(?P<op>//|%|\*|/)(-?\d+(?:\.\d+)?)')
         while True:
             m = pat_mul.search(s)
             if not m:
                 break
-            a = float(m.group(1)); op_sym = m.group('op'); b = float(m.group(3))
+            a = float(m.group(1))
+            op_sym = m.group('op')
+            b = float(m.group(3))
             try:
-                if op_sym == '*': r = a * b
-                elif op_sym == '/': r = a / b
-                elif op_sym == '//': r = a // b
-                elif op_sym == '%': r = a % b
+                if op_sym == '*':
+                    r = a * b
+                elif op_sym == '/':
+                    r = a / b
+                elif op_sym == '//':
+                    r = a // b
+                elif op_sym == '%':
+                    r = a % b
             except Exception as e:
                 raise ExpressionError(f"Error computing {a}{op_sym}{b}: {e}")
             s = s[:m.start()] + str(r) + s[m.end():]
             logger.debug(f"{op_sym}: {a}{op_sym}{b} -> {r}, now {s}")
 
         # 3) +, - left-assoc
-        pat_add = re.compile(r'(?<![\d)])(-?\d+(?:\.\d+)?)(?P<op>[+\-])(-?\d+(?:\.\d+)?)')
+        pat_add = re.compile(
+            r'(?<![\d)])(-?\d+(?:\.\d+)?)(?P<op>[+\-])(-?\d+(?:\.\d+)?)')
         while True:
             m = pat_add.search(s)
             if not m:
                 break
-            a = float(m.group(1)); op_sym = m.group('op'); b = float(m.group(3))
-            if op_sym == '+': r = a + b
-            else: r = a - b
+            a = float(m.group(1))
+            op_sym = m.group('op')
+            b = float(m.group(3))
+            if op_sym == '+':
+                r = a + b
+            else:
+                r = a - b
             s = s[:m.start()] + str(r) + s[m.end():]
             logger.debug(f"{op_sym}: {a}{op_sym}{b} -> {r}, now {s}")
 
@@ -174,6 +189,7 @@ def evaluate(expression, variables=None, functions=None):
         try:
             return float(res)
         except ValueError:
-            raise ExpressionError(f"Could not fully evaluate expression, got '{res}'")
+            raise ExpressionError(
+                f"Could not fully evaluate expression, got '{res}'")
 
     return eval_expr(expr)
