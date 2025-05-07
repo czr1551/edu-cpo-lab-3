@@ -36,17 +36,6 @@ def arg_type(pos, expected_type):
 
 @arg_type(0, str)
 def evaluate(expression, variables=None, functions=None):
-    """
-    Evaluate a mathematical expression via string
-    substitution with correct precedence,
-    supporting:
-      - Parentheses grouping
-      - Exponentiation (**), right-associative
-      - *, /, //, % (left-associative)
-      - +, - (binary, left-associative)
-      - Unary minus
-      - Multi-argument and user-defined functions
-    """
     # --- Setup and validation ---
     variables = {} if variables is None else variables
     functions = {} if functions is None else functions
