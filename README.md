@@ -48,12 +48,12 @@ and detailed error reporting with logging.
 
 ## Changelog
 
-- **2025-04-23 – 1.2**
+- **2025-04-23 – 1.3**
 - Fixed right-associative exponentiation edge cases
 - Improved flat evaluator regex for mixed operators
 - Enhanced error messages for empty expressions
 
-- **12.02.2025 - 2**
+- **2025-04-22 - 1.2**
 - Refactored `_probe()` to correctly handle empty slots.
 
 - **2025-04-21 – 1.1**
